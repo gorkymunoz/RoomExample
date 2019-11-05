@@ -6,46 +6,23 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.roomexample.data.BookDao
 import com.example.roomexample.data.BookEntity
+import com.example.roomexample.data.BookRepository
 import com.example.roomexample.data.BookRoomDatabase
 
 class SearchViewModel(application: Application):AndroidViewModel(application){
 
-    private val bookDao: BookDao
+    private val bookRepository = BookRepository(application)
 
-    init {
-        val bookDB = BookRoomDatabase.getDatabase(application)
-        bookDao = bookDB!!.bookDao()
-    }
-
-    fun getBooksByBookOrAuthor(searchQuery:String): LiveData<List<BookEntity>>{
-        return bookDao.getBooksByBookOrAuthor(searchQuery)
+    fun getBooksByBookOrAuthor(searchQuery:String): LiveData<List<BookEntity>>?{
+        return bookRepository.getBooksByBookOrAuthor(searchQuery)
     }
 
     fun update(book: BookEntity) {
-        UpdateAsyncTask(bookDao).execute(book)
+        bookRepository.update(book)
     }
 
     fun delete(book: BookEntity) {
-        DeleteAsyncTask(bookDao).execute(book)
-    }
-
-    companion object {
-
-        private class UpdateAsyncTask(private val bookDao: BookDao) : AsyncTask<BookEntity, Void, Void>() {
-
-            override fun doInBackground(vararg books: BookEntity): Void? {
-                bookDao.update(books[0])
-                return null
-            }
-        }
-
-        private class DeleteAsyncTask(private val bookDao: BookDao) : AsyncTask<BookEntity, Void, Void>() {
-
-            override fun doInBackground(vararg books: BookEntity): Void? {
-                bookDao.delete(books[0])
-                return null
-            }
-        }
+        bookRepository.delete(book)
     }
 
 }

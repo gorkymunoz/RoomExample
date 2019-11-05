@@ -24,6 +24,7 @@ class SearchResultActivity : AppCompatActivity(), BookListAdapter.OnDeleteClickL
     private var bookListAdapter: BookListAdapter? = null
     private val TAG = this.javaClass.simpleName
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -47,7 +48,7 @@ class SearchResultActivity : AppCompatActivity(), BookListAdapter.OnDeleteClickL
         if (Intent.ACTION_SEARCH == intent.action) {
             val searchQuery = intent.getStringExtra(SearchManager.QUERY)
             searchViewModel.getBooksByBookOrAuthor("%$searchQuery%")
-                .observe(this, Observer { books ->
+                ?.observe(this, Observer { books ->
                     books.let {
                         bookListAdapter!!.setBooks(books)
                     }
