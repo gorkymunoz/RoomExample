@@ -1,9 +1,13 @@
 package com.example.roomexample
 
 import android.app.Activity
+import android.app.SearchManager
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.LinearLayout
+import android.view.Menu
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -11,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.roomexample.adapters.BookListAdapter
 import com.example.roomexample.data.BookEntity
+import com.example.roomexample.viewmodels.BookViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
@@ -38,6 +43,19 @@ class MainActivity : AppCompatActivity(), BookListAdapter.OnDeleteClickListener 
                 bookListAdapter.setBooks(books)
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_main,menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView : SearchView = menu.findItem(R.id.search).actionView as SearchView
+
+        val componentName = ComponentName(this, SearchResultActivity::class.java)
+        val searchableInfo = searchManager.getSearchableInfo(componentName)
+        searchView.setSearchableInfo(searchableInfo)
+        return true
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
