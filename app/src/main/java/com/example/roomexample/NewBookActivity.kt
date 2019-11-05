@@ -13,7 +13,7 @@ class NewBookActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new)
 
-        bAdd.setOnClickListener {
+        bSave.setOnClickListener {
 
             val resultIntent = Intent()
 
