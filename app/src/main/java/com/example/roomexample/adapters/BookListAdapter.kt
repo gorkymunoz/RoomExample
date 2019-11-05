@@ -26,6 +26,11 @@ class BookListAdapter(private val context: Context):
         holder.setData(book.authorName,book.bookName,position)
     }
 
+    fun setBooks(books: List<BookEntity>) {
+        bookList = books
+        notifyDataSetChanged()
+    }
+
     inner class BookViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
         private var pos = 0
