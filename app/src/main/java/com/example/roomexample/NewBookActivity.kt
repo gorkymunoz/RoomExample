@@ -26,6 +26,7 @@ class NewBookActivity : AppCompatActivity() {
 
                 resultIntent.putExtra(NEW_AUTHOR,author)
                 resultIntent.putExtra(NEW_BOOK,book)
+                setResult(Activity.RESULT_OK,resultIntent)
             }
             finish()
         }
