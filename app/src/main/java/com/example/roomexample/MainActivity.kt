@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BookListAdapter.OnDeleteClickListener {
 
     private lateinit var bookViewModel: BookViewModel
 
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val bookListAdapter = BookListAdapter(this)
+        val bookListAdapter = BookListAdapter(this,this)
         rv_books.adapter = bookListAdapter
         rv_books.layoutManager = LinearLayoutManager(this)
 
@@ -75,6 +75,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDeleteClickListener(myBook: BookEntity) {
+        bookViewModel.delete(myBook)
+        Toast.makeText(
+            applicationContext,
+            R.string.deleted,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
     companion object {
         private const val NEW_NOTE_ACTIVITY_REQUEST_CODE = 1
         const val UPDATE_NOTE_ACTIVITY_REQUEST_CODE = 2

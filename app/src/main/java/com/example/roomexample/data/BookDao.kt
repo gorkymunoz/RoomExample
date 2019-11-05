@@ -1,10 +1,7 @@
 package com.example.roomexample.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
 @Dao
 interface BookDao {
@@ -20,5 +17,8 @@ interface BookDao {
 
     @Update
     fun update(book: BookEntity)
+
+    @Delete
+    fun delete(book:BookEntity)
 
 }

@@ -13,8 +13,13 @@ import com.example.roomexample.R
 import com.example.roomexample.data.BookEntity
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class BookListAdapter(private val context: Context):
+class BookListAdapter(private val context: Context,
+                      private val onDeleteClickListener: OnDeleteClickListener):
     RecyclerView.Adapter<BookListAdapter.BookViewHolder>() {
+
+    interface OnDeleteClickListener{
+        fun onDeleteClickListener(myBook:BookEntity)
+    }
 
     private var bookList: List<BookEntity> = mutableListOf()
 
@@ -54,6 +59,7 @@ class BookListAdapter(private val context: Context):
                 (context as Activity).startActivityForResult(intent,MainActivity.UPDATE_NOTE_ACTIVITY_REQUEST_CODE)
             }
             itemView.ivRowDelete.setOnClickListener {
+                onDeleteClickListener.onDeleteClickListener(bookList[pos])
 
             }
         }
