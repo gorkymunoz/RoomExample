@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.roomexample.adapters.BookListAdapter
@@ -43,9 +44,14 @@ class SearchResultActivity : AppCompatActivity(), BookListAdapter.OnDeleteClickL
     }
 
     private fun handleIntent(intent: Intent) {
-        if(Intent.ACTION_SEARCH == intent.action){
+        if (Intent.ACTION_SEARCH == intent.action) {
             val searchQuery = intent.getStringExtra(SearchManager.QUERY)
-            Log.i(TAG,"Search Query is $searchQuery")
+            searchViewModel.getBooksByBookOrAuthor("%$searchQuery%")
+                .observe(this, Observer { books ->
+                    books.let {
+                        bookListAdapter!!.setBooks(books)
+                    }
+                })
         }
     }
 
@@ -63,8 +69,7 @@ class SearchResultActivity : AppCompatActivity(), BookListAdapter.OnDeleteClickL
 
             Toast.makeText(applicationContext, R.string.updated, Toast.LENGTH_LONG).show()
 
-        }
-        else {
+        } else {
             Toast.makeText(applicationContext, R.string.not_saved, Toast.LENGTH_LONG).show()
         }
     }

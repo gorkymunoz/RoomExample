@@ -21,4 +21,7 @@ interface BookDao {
     @Delete
     fun delete(book:BookEntity)
 
+    @Query("SELECT * FROM books WHERE book LIKE :searchString OR author LIKE :searchString")
+    fun getBooksByBookOrAuthor(searchString:String) : LiveData<List<BookEntity>>
+
 }
