@@ -55,6 +55,17 @@ class MainActivity : AppCompatActivity() {
                 R.string.saved,
                 Toast.LENGTH_SHORT
             ).show()
+        } else if(requestCode == UPDATE_NOTE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            val id = data!!.getStringExtra(EditBookActivity.ID)
+            val authorName = data.getStringExtra(EditBookActivity.UPDATED_AUTHOR)
+            val bookName = data.getStringExtra(EditBookActivity.UPDATED_BOOK)
+            val book = BookEntity(id,authorName,bookName)
+            bookViewModel.update(book)
+            Toast.makeText(
+                applicationContext,
+                R.string.updated,
+                Toast.LENGTH_SHORT
+            ).show()
         } else {
             Toast.makeText(
                 applicationContext,
@@ -66,5 +77,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val NEW_NOTE_ACTIVITY_REQUEST_CODE = 1
+        const val UPDATE_NOTE_ACTIVITY_REQUEST_CODE = 2
     }
 }

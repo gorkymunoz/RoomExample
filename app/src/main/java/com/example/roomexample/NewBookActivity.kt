@@ -30,6 +30,9 @@ class NewBookActivity : AppCompatActivity() {
             }
             finish()
         }
+        bCancel.setOnClickListener {
+            finish()
+        }
     }
 
     companion object{

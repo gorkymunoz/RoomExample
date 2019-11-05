@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface BookDao {
@@ -16,5 +17,8 @@ interface BookDao {
 
     @get:Query("SELECT * FROM books")
     val allBoks : LiveData<List<BookEntity>>
+
+    @Update
+    fun update(book: BookEntity)
 
 }
